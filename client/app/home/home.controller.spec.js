@@ -5,11 +5,12 @@ describe('Controller: HomeController', function () {
   // load the controller's module
   beforeEach(module('AngularJsTestson'));
 
-  var HomeCtrl, scope, $httpBackend;
+  var HomeCtrl, scope, $httpBackend, _cartItem;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, cartItem, _$httpBackend_) {
     scope = $rootScope.$new();
+    _cartItem = cartItem;
 
     $httpBackend = _$httpBackend_;
     $httpBackend.expectGET('/api/products').respond([{
@@ -36,10 +37,17 @@ describe('Controller: HomeController', function () {
     });
   }));
 
-  it('should ...', function () {
-
-    expect(scope.products).undefined();
+  it('test $scope.addCart', function () {
     $httpBackend.flush();
-    expect(scope.products.length).to.eql(4);
+
+    scope.addCart(scope.products[0]);
+    expect(_cartItem.items.length).to.eql(1);
+  });
+
+  it('test $scope.CartItemCount', function () {
+    $httpBackend.flush();
+
+    _cartItem.items.push(scope.products[0]);
+    expect(scope.CartItemCount()).to.eql(1);
   });
 });
