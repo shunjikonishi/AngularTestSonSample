@@ -18,11 +18,6 @@ describe('Service: cartItem', function () {
     "productName": "味わいカルピス",
     "price": 100
   }];
-  function addAllProducts() {
-    for (var item in products) {
-      cartItem.add(item);
-    }
-  }
 
   // load the service's module
   beforeEach(module('AngularJsTestson'));
@@ -38,7 +33,9 @@ describe('Service: cartItem', function () {
   });
 
   it('Test for add', function () {
-    addAllProducts();
+    for (var item in products) {
+      cartItem.add(item);
+    }
     expect(cartItem.items.length).to.be.eql(products.length);
   });
 
@@ -52,7 +49,10 @@ describe('Service: cartItem', function () {
   */
 
   it('Test for clear', function () {
-    addAllProducts();
+    for (var i=0; i<3; i++) {
+      cartItem.add(products[0]);
+    }
+    expect(cartItem.items.length).to.be.eql(3);
     cartItem.clear();
     expect(cartItem.items.length).to.be.eql(0);
   });
@@ -65,5 +65,9 @@ describe('Service: cartItem', function () {
 
     cartItem.removeProductId(products[0].productId);
     expect(cartItem.items.length).to.be.eql(2);
+
+    cartItem.removeProductId(9999);
+    expect(cartItem.items.length).to.be.eql(2);
   });
+
 });
