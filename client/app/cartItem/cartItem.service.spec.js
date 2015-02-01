@@ -12,7 +12,7 @@ describe('Service: cartItem', function () {
   }));
 
   it('should do something', function () {
-    expect(!!cartItem).toBe(true);
+    expect(!!cartItem).to.be.true;
   });
 
 });
